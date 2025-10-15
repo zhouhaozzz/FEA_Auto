@@ -75,6 +75,10 @@ if (colling_type == "INGA 3" or colling_type == "IN 3"):
 elif (colling_type == "INGA 1"or colling_type == "INGA 1"):
     conv1 = analysis1.AddConvection()
 TEMP_Mirror = STAT_THERM_SOLN.AddTemperature()
+CONT_REG1 = []
+CONT_REG2 = []
+CONT_REG3 = []
+CONT_REG4 = []
 
 # Add Heatflux
 time.sleep(rank/5+0.5) 
@@ -137,9 +141,9 @@ if (temp_check==0):
         geometry_import.Import(g, geometry_import_format, geometry_import_preferences)
         if (colling_type == "INGA 3"):
             mirror = get_object_by_name("Mirror (Mirror)")
-            cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-            cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-            cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_pos = get_object_by_name("OFHC_POS (OFHC_POS)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
             inga = get_object_by_name("Inga (Inga)")
             optics_face = get_object_by_name("optics_face")
             inga_conn_mirror = get_object_by_name("inga_conn_mirror")
@@ -158,9 +162,9 @@ if (temp_check==0):
             sanre_pos = get_object_by_name("sanre_pos")
             # 定义材料参数
             mirror.Material="SI"
-            cu1.Material="OFHC"
-            cu2.Material="OFHC"
-            cu3.Material="OFHC"
+            cu_mid.Material="OFHC"
+            cu_pos.Material="OFHC"
+            cu_neg.Material="OFHC"
             inga.Material="INGA"
             #定义网格精度
             size1.Location = optics_face
@@ -177,7 +181,7 @@ if (temp_check==0):
             size4.Behavior = SizingBehavior.Hard
         elif (colling_type == "INGA 1"):
             mirror = get_object_by_name("Mirror (Mirror)")
-            cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
             inga = get_object_by_name("Inga (Inga)")
             optics_face = get_object_by_name("optics_face")
             inga_conn_mirror = get_object_by_name("inga_conn_mirror")
@@ -190,7 +194,7 @@ if (temp_check==0):
             sanre_mid = get_object_by_name("sanre_mid")
             # 定义材料参数
             mirror.Material="SI"
-            cu1.Material="OFHC"
+            cu_mid.Material="OFHC"
             inga.Material="INGA"
             #定义网格精度
             size1.Location = optics_face
@@ -205,45 +209,32 @@ if (temp_check==0):
             size4.Location = ns_cu
             size4.ElementSize=Quantity(ElementSize_ns_cu)
             size4.Behavior = SizingBehavior.Hard
-        elif (colling_type == "IN 3"):
+        elif (colling_type == "IN 1"):
             mirror = get_object_by_name("Mirror (Mirror)")
-            cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-            cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-            cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
             optics_face = get_object_by_name("optics_face")
-            inga_conn_mirror = get_object_by_name("inga_conn_mirror")
-            mirror_conn_inga = get_object_by_name("mirror_conn_inga")
-            inga_conn_ofhcn = get_object_by_name("inga_conn_ofhcn")
-            inga_conn_ofhcm = get_object_by_name("inga_conn_ofhcm")
-            inga_conn_ofhcp = get_object_by_name("inga_conn_ofhcp")
-            ofhcn_conn_inga = get_object_by_name("ofhcn_conn_inga")
-            ofhcm_conn_inga = get_object_by_name("ofhcm_conn_inga")
-            ofhcp_conn_inga = get_object_by_name("ofhcp_conn_inga")
+            cu_conn_mirror_neg = get_object_by_name("cu_conn_mirror_neg")
+            cu_conn_mirror_mid = get_object_by_name("cu_conn_mirror_mid")
+            mirror_conn_cu_neg = get_object_by_name("mirror_conn_cu_neg")
+            mirror_conn_cu_mid = get_object_by_name("mirror_conn_cu_mid")
             ns_mirror = get_object_by_name("ns_mirror")
-            ns_inga = get_object_by_name("ns_inga")
             ns_cu = get_object_by_name("ns_cu")
             sanre_mid = get_object_by_name("sanre_mid")
-            sanre_neg = get_object_by_name("sanre_neg")
-            sanre_pos = get_object_by_name("sanre_pos")
             # 定义材料参数
             mirror.Material="SI"
-            cu1.Material="OFHC"
-            cu2.Material="OFHC"
-            cu3.Material="OFHC"
-            inga.Material="INGA"
+            cu_mid.Material="OFHC"
+            cu_neg.Material="OFHC"
             #定义网格精度
             size1.Location = optics_face
             size1.ElementSize=Quantity(ElementSize_optics_face)
             size1.Behavior = SizingBehavior.Hard
-            size2.Location = ns_inga
-            size2.ElementSize=Quantity(ElementSize_ns_inga)
+            size2.Location = ns_mirror
+            size2.ElementSize=Quantity(ElementSize_ns_mirror)
             size2.Behavior = SizingBehavior.Hard
-            size3.Location = ns_mirror
-            size3.ElementSize=Quantity(ElementSize_ns_mirror)
+            size3.Location = ns_cu
+            size3.ElementSize=Quantity(ElementSize_ns_cu)
             size3.Behavior = SizingBehavior.Hard
-            size4.Location = ns_cu
-            size4.ElementSize=Quantity(ElementSize_ns_cu)
-            size4.Behavior = SizingBehavior.Hard
 
 
         MESH.GenerateMesh()
@@ -282,6 +273,34 @@ if (temp_check==0):
             CONT_REG4.ContactType = ContactType.NoSeparation
             CONT_REG4.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
             CONT_REG4.AutomaticThermalConductance = False
+        elif (colling_type == "INGA 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = inga_conn_mirror
+            CONT_REG1.TargetLocation = mirror_conn_inga
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = inga_conn_ofhcm
+            CONT_REG2.TargetLocation = ofhcm_conn_inga
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+        elif (colling_type == "IN 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = cu_conn_mirror_neg
+            CONT_REG1.TargetLocation = mirror_conn_cu_neg
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = cu_conn_mirror_mid
+            CONT_REG2.TargetLocation = mirror_conn_cu_mid
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+            
+
 
         TEMP_Mirror.Location = ns_mirror
         TEMP_Mirror.ScopingMethod = GeometryDefineByType.Component
@@ -330,6 +349,14 @@ if (temp_check==0):
                 conv3.Location = sanre_pos
                 conv3.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_side, "W m^-1 m^-1 C^-1"))
                 conv3.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_value, "C"))
+            elif (colling_type == "INGA 1"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
+            elif (colling_type == "IN 3"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
 
             STAT_THERM_SOLN.Solve()
 
@@ -381,9 +408,9 @@ elif (temp_check==1):
         geometry_import.Import(g, geometry_import_format, geometry_import_preferences)
         if (colling_type == "INGA 3"):
             mirror = get_object_by_name("Mirror (Mirror)")
-            cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-            cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-            cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_pos = get_object_by_name("OFHC_POS (OFHC_POS)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
             inga = get_object_by_name("Inga (Inga)")
             optics_face = get_object_by_name("optics_face")
             inga_conn_mirror = get_object_by_name("inga_conn_mirror")
@@ -402,9 +429,9 @@ elif (temp_check==1):
             sanre_pos = get_object_by_name("sanre_pos")
             # 定义材料参数
             mirror.Material="SI"
-            cu1.Material="OFHC"
-            cu2.Material="OFHC"
-            cu3.Material="OFHC"
+            cu_mid.Material="OFHC"
+            cu_pos.Material="OFHC"
+            cu_neg.Material="OFHC"
             inga.Material="INGA"
             #定义网格精度
             size1.Location = optics_face
@@ -412,13 +439,69 @@ elif (temp_check==1):
             size1.Behavior = SizingBehavior.Hard
             size2.Location = ns_inga
             size2.ElementSize=Quantity(ElementSize_ns_inga)
-            #size2.Behavior = SizingBehavior.Hard
+            size2.Behavior = SizingBehavior.Hard
             size3.Location = ns_mirror
             size3.ElementSize=Quantity(ElementSize_ns_mirror)
-            #size3.Behavior = SizingBehavior.Hard
+            size3.Behavior = SizingBehavior.Hard
             size4.Location = ns_cu
             size4.ElementSize=Quantity(ElementSize_ns_cu)
-            #size4.Behavior = SizingBehavior.Hard
+            size4.Behavior = SizingBehavior.Hard
+        elif (colling_type == "INGA 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            inga_conn_mirror = get_object_by_name("inga_conn_mirror")
+            mirror_conn_inga = get_object_by_name("mirror_conn_inga")
+            inga_conn_ofhcm = get_object_by_name("inga_conn_ofhcm")
+            ofhcm_conn_inga = get_object_by_name("ofhcm_conn_inga")
+            ns_mirror = get_object_by_name("ns_mirror")
+            ns_inga = get_object_by_name("ns_inga")
+            ns_cu = get_object_by_name("ns_cu")
+            sanre_mid = get_object_by_name("sanre_mid")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            inga.Material="INGA"
+            #定义网格精度
+            size1.Location = optics_face
+            size1.ElementSize=Quantity(ElementSize_optics_face)
+            size1.Behavior = SizingBehavior.Hard
+            size2.Location = ns_inga
+            size2.ElementSize=Quantity(ElementSize_ns_inga)
+            size2.Behavior = SizingBehavior.Hard
+            size3.Location = ns_mirror
+            size3.ElementSize=Quantity(ElementSize_ns_mirror)
+            size3.Behavior = SizingBehavior.Hard
+            size4.Location = ns_cu
+            size4.ElementSize=Quantity(ElementSize_ns_cu)
+            size4.Behavior = SizingBehavior.Hard
+        elif (colling_type == "IN 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            optics_face = get_object_by_name("optics_face")
+            cu_conn_mirror_neg = get_object_by_name("cu_conn_mirror_neg")
+            cu_conn_mirror_mid = get_object_by_name("cu_conn_mirror_mid")
+            mirror_conn_cu_neg = get_object_by_name("mirror_conn_cu_neg")
+            mirror_conn_cu_mid = get_object_by_name("mirror_conn_cu_mid")
+            ns_mirror = get_object_by_name("ns_mirror")
+            ns_cu = get_object_by_name("ns_cu")
+            sanre_mid = get_object_by_name("sanre_mid")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            cu_neg.Material="OFHC"
+            #定义网格精度
+            size1.Location = optics_face
+            size1.ElementSize=Quantity(ElementSize_optics_face)
+            size1.Behavior = SizingBehavior.Hard
+            size2.Location = ns_mirror
+            size2.ElementSize=Quantity(ElementSize_ns_mirror)
+            size2.Behavior = SizingBehavior.Hard
+            size3.Location = ns_cu
+            size3.ElementSize=Quantity(ElementSize_ns_cu)
+            size3.Behavior = SizingBehavior.Hard
         
         MESH.GenerateMesh()
         CONN = Model.Connections
@@ -450,7 +533,33 @@ elif (temp_check==1):
             CONT_REG4.ContactType = ContactType.NoSeparation
             CONT_REG4.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
             CONT_REG4.AutomaticThermalConductance = False
-        
+        elif (colling_type == "INGA 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = inga_conn_mirror
+            CONT_REG1.TargetLocation = mirror_conn_inga
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = inga_conn_ofhcm
+            CONT_REG2.TargetLocation = ofhcm_conn_inga
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+        elif (colling_type == "IN 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = cu_conn_mirror_neg
+            CONT_REG1.TargetLocation = mirror_conn_cu_neg
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = cu_conn_mirror_mid
+            CONT_REG2.TargetLocation = mirror_conn_cu_mid
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+
         TEMP_Mirror.Location = ns_mirror
         TEMP_Mirror.ScopingMethod = GeometryDefineByType.Component
         external_data_file.FilePath = h
@@ -470,6 +579,14 @@ elif (temp_check==1):
             conv3.Location = sanre_pos
             conv3.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_side, "W m^-1 m^-1 C^-1"))
             conv3.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_value, "C"))
+        elif (colling_type == "INGA 1"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
+        elif (colling_type == "IN 3"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
 
         STAT_THERM_SOLN.Solve()
         fileExtension=r".txt"
@@ -513,9 +630,9 @@ else:
         geometry_import.Import(g, geometry_import_format, geometry_import_preferences)
         if (colling_type == "INGA 3"):
             mirror = get_object_by_name("Mirror (Mirror)")
-            cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-            cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-            cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_pos = get_object_by_name("OFHC_POS (OFHC_POS)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
             inga = get_object_by_name("Inga (Inga)")
             optics_face = get_object_by_name("optics_face")
             inga_conn_mirror = get_object_by_name("inga_conn_mirror")
@@ -534,9 +651,9 @@ else:
             sanre_pos = get_object_by_name("sanre_pos")
             # 定义材料参数
             mirror.Material="SI"
-            cu1.Material="OFHC"
-            cu2.Material="OFHC"
-            cu3.Material="OFHC"
+            cu_mid.Material="OFHC"
+            cu_pos.Material="OFHC"
+            cu_neg.Material="OFHC"
             inga.Material="INGA"
             #定义网格精度
             size1.Location = optics_face
@@ -551,7 +668,63 @@ else:
             size4.Location = ns_cu
             size4.ElementSize=Quantity(ElementSize_ns_cu)
             #size4.Behavior = SizingBehavior.Hard
-        
+        elif (colling_type == "INGA 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            inga_conn_mirror = get_object_by_name("inga_conn_mirror")
+            mirror_conn_inga = get_object_by_name("mirror_conn_inga")
+            inga_conn_ofhcm = get_object_by_name("inga_conn_ofhcm")
+            ofhcm_conn_inga = get_object_by_name("ofhcm_conn_inga")
+            ns_mirror = get_object_by_name("ns_mirror")
+            ns_inga = get_object_by_name("ns_inga")
+            ns_cu = get_object_by_name("ns_cu")
+            sanre_mid = get_object_by_name("sanre_mid")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            inga.Material="INGA"
+            #定义网格精度
+            size1.Location = optics_face
+            size1.ElementSize=Quantity(ElementSize_optics_face)
+            size1.Behavior = SizingBehavior.Hard
+            size2.Location = ns_inga
+            size2.ElementSize=Quantity(ElementSize_ns_inga)
+            size2.Behavior = SizingBehavior.Hard
+            size3.Location = ns_mirror
+            size3.ElementSize=Quantity(ElementSize_ns_mirror)
+            size3.Behavior = SizingBehavior.Hard
+            size4.Location = ns_cu
+            size4.ElementSize=Quantity(ElementSize_ns_cu)
+            size4.Behavior = SizingBehavior.Hard
+        elif (colling_type == "IN 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            optics_face = get_object_by_name("optics_face")
+            cu_conn_mirror_neg = get_object_by_name("cu_conn_mirror_neg")
+            cu_conn_mirror_mid = get_object_by_name("cu_conn_mirror_mid")
+            mirror_conn_cu_neg = get_object_by_name("mirror_conn_cu_neg")
+            mirror_conn_cu_mid = get_object_by_name("mirror_conn_cu_mid")
+            ns_mirror = get_object_by_name("ns_mirror")
+            ns_cu = get_object_by_name("ns_cu")
+            sanre_mid = get_object_by_name("sanre_mid")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            cu_neg.Material="OFHC"
+            #定义网格精度
+            size1.Location = optics_face
+            size1.ElementSize=Quantity(ElementSize_optics_face)
+            size1.Behavior = SizingBehavior.Hard
+            size2.Location = ns_mirror
+            size2.ElementSize=Quantity(ElementSize_ns_mirror)
+            size2.Behavior = SizingBehavior.Hard
+            size3.Location = ns_cu
+            size3.ElementSize=Quantity(ElementSize_ns_cu)
+            size3.Behavior = SizingBehavior.Hard
+
         MESH.GenerateMesh()
         CONN = Model.Connections
         for connection in CONN.Children:
@@ -582,7 +755,33 @@ else:
             CONT_REG4.ContactType = ContactType.NoSeparation
             CONT_REG4.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
             CONT_REG4.AutomaticThermalConductance = False
-        
+        elif (colling_type == "INGA 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = inga_conn_mirror
+            CONT_REG1.TargetLocation = mirror_conn_inga
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = inga_conn_ofhcm
+            CONT_REG2.TargetLocation = ofhcm_conn_inga
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+        elif (colling_type == "IN 1"):
+            CONT_REG1 = CONN.AddContactRegion()
+            CONT_REG2 = CONN.AddContactRegion()
+            CONT_REG1.SourceLocation = cu_conn_mirror_neg
+            CONT_REG1.TargetLocation = mirror_conn_cu_neg
+            CONT_REG1.ContactType = ContactType.NoSeparation
+            CONT_REG1.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG1.AutomaticThermalConductance = False
+            CONT_REG2.SourceLocation = cu_conn_mirror_mid
+            CONT_REG2.TargetLocation = mirror_conn_cu_mid
+            CONT_REG2.ContactType = ContactType.NoSeparation
+            CONT_REG2.ThermalConductanceValue = Quantity(150000, "W m^-1 m^-1 C^-1")
+            CONT_REG2.AutomaticThermalConductance = False
+
         TEMP_Mirror.Location = ns_mirror
         TEMP_Mirror.ScopingMethod = GeometryDefineByType.Component
         external_data_file.FilePath = h
@@ -602,7 +801,15 @@ else:
             conv3.Location = sanre_pos
             conv3.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_side, "W m^-1 m^-1 C^-1"))
             conv3.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_value, "C"))
-
+        elif (colling_type == "INGA 1"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
+        elif (colling_type == "IN 3"):
+                conv1.Location = sanre_mid
+                conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
+                conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
+                
         STAT_THERM_SOLN.Solve()
         fileExtension=r".txt"
         results = STAT_THERM_SOLN.GetChildren(Ansys.Mechanical.DataModel.Enums.DataModelObjectCategory.Result,True)

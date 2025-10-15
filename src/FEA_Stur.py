@@ -172,24 +172,49 @@ if (def_check):
                 index += gemo_single_num
                 continue   
         geometry_import.Import(g, geometry_import_format, geometry_import_preferences)
-        mirror = get_object_by_name("Mirror (Mirror)")
-        cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-        cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-        cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
-        inga = get_object_by_name("Inga (Inga)")
-        optics_face = get_object_by_name("optics_face")
-        ns_mirror = get_object_by_name("ns_mirror")
-        # 定义材料参数
-        mirror.Material="SI"
-        cu1.Material="OFHC"
-        cu2.Material="OFHC"
-        cu3.Material="OFHC"
-        inga.Material="INGA"
+        if (colling_type == "INGA 3"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_pos = get_object_by_name("OFHC_POS (OFHC_POS)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            cu_pos.Material="OFHC"
+            cu_neg.Material="OFHC"
+            inga.Material="INGA"
 
-        inga.Suppressed = True
-        cu1.Suppressed = True
-        cu2.Suppressed = True
-        cu3.Suppressed = True
+            inga.Suppressed = True
+            cu_mid.Suppressed = True
+            cu_pos.Suppressed = True
+            cu_neg.Suppressed = True
+        if (colling_type == "INGA 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            inga.Material="INGA"
+
+            inga.Suppressed = True
+            cu_mid.Suppressed = True
+        if (colling_type == "IN 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+
+            cu_mid.Suppressed = True
 
         CONN = Model.Connections
         for connection in CONN.Children:
@@ -204,7 +229,7 @@ if (def_check):
         size1.Behavior = SizingBehavior.Hard
         size2.Location = ns_mirror
         size2.ElementSize=Quantity(ElementSize_ns_mirror) #6
-        #size2.Behavior = SizingBehavior.Hard
+        size2.Behavior = SizingBehavior.Hard
         MESH.GenerateMesh()
 
         deformation1.ScopingMethod = GeometryDefineByType.Path
@@ -308,22 +333,46 @@ else:
         print(num1,num2)
 
         geometry_import.Import(g, geometry_import_format, geometry_import_preferences)
-        mirror = get_object_by_name("Mirror (Mirror)")
-        cu1 = get_object_by_name("OFHC_MID (OFHC_MID)")
-        cu2 = get_object_by_name("OFHC_POS (OFHC_POS)")
-        cu3 = get_object_by_name("OFHC_NEG (OFHC_NEG)")
-        inga = get_object_by_name("Inga (Inga)")
-        optics_face = get_object_by_name("optics_face")
-        ns_mirror = get_object_by_name("ns_mirror")
-        mirror.Material="SI"
-        cu1.Material="OFHC"
-        cu2.Material="OFHC"
-        cu3.Material="OFHC"
-        inga.Material="INGA"
-        inga.Suppressed = True
-        cu1.Suppressed = True
-        cu2.Suppressed = True
-        cu3.Suppressed = True
+        if (colling_type == "INGA 3"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_pos = get_object_by_name("OFHC_POS (OFHC_POS)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            cu_pos.Material="OFHC"
+            cu_neg.Material="OFHC"
+            inga.Material="INGA"
+            inga.Suppressed = True
+            cu_mid.Suppressed = True
+            cu_pos.Suppressed = True
+            cu_neg.Suppressed = True
+        if (colling_type == "INGA 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            inga = get_object_by_name("Inga (Inga)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+            inga.Material="INGA"
+        if (colling_type == "IN 1"):
+            mirror = get_object_by_name("Mirror (Mirror)")
+            cu_mid = get_object_by_name("OFHC_MID (OFHC_MID)")
+            cu_neg = get_object_by_name("OFHC_NEG (OFHC_NEG)")
+            optics_face = get_object_by_name("optics_face")
+            ns_mirror = get_object_by_name("ns_mirror")
+            # 定义材料参数
+            mirror.Material="SI"
+            cu_mid.Material="OFHC"
+
+            cu_mid.Suppressed = True
+            
         CONN = Model.Connections
         for connection in CONN.Children:
             if connection.DataModelObjectCategory == DataModelObjectCategory.ConnectionGroup:
