@@ -38,16 +38,18 @@ temp_vals, conv_center_vals, conv_side_vals = rw.read_temp_conv()
 temp_num = (len(geometry_path)) * 1 * len(temp_vals) * len(conv_center_vals) * len(conv_side_vals)
 
 if rank == 0: #拷贝已有负载
-    mirror_name = [" ".join(heat)]
+    mirror_name = [heat]
+    print(heat)
 
-    mirror_name = ["M1 EEHG"]
-    frequency = ["100k"]
+    #mirror_name = ["M1 EEHG"]
+    #frequency = ["100k"]
     
     rw.delete_files_in_folder(os.path.join(cwd,"Files", "Heatload"))
     for i in mirror_name:
         for j in frequency:
             rw.creat_heatload_file(cwd, i, j)
     
+# exit(0)
 comm.Barrier()
 geometry_path, heat_flux_path, material_path, thermal_script_path, geometry_script_path, stur_script_path = rw.get_all_path(cwd)
 if rank == 0:
