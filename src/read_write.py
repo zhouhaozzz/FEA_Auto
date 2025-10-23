@@ -80,9 +80,10 @@ def read_ini_geom():
         for line in file:
             values = [v for v in line.strip().split(' ') if v]
             if len(values) == 0: continue
-            if values[0] == 'geometry:':
+            if values[0] == 'geometry1:':
+                
                 geometry = " ".join(values[1:])
-            if values[0] == 'colling_type:':
+            if values[0] == 'colling_type1:':
                 colling_type = " ".join(values[1:])
             if values[0] == 'heat_flux:':
                 heat = geometry + " " + " ".join(values[1:])

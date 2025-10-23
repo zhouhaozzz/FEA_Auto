@@ -72,7 +72,7 @@ if (colling_type == "INGA 3" or colling_type == "IN 3"):
     conv1 = analysis1.AddConvection()
     conv2 = analysis1.AddConvection()
     conv3 = analysis1.AddConvection()
-elif (colling_type == "INGA 1"or colling_type == "INGA 1"):
+elif (colling_type == "INGA 1"or colling_type == "IN 1"):
     conv1 = analysis1.AddConvection()
 TEMP_Mirror = STAT_THERM_SOLN.AddTemperature()
 CONT_REG1 = []
@@ -353,7 +353,7 @@ if (temp_check==0):
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
-            elif (colling_type == "IN 3"):
+            elif (colling_type == "IN 1"):
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
@@ -583,7 +583,7 @@ elif (temp_check==1):
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
-        elif (colling_type == "IN 3"):
+        elif (colling_type == "IN 1"):
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
@@ -805,7 +805,7 @@ else:
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
-        elif (colling_type == "IN 3"):
+        elif (colling_type == "IN 1"):
                 conv1.Location = sanre_mid
                 conv1.FilmCoefficient.Output.SetDiscreteValue(0, Quantity(conv_center, "W m^-1 m^-1 C^-1"))
                 conv1.AmbientTemperature.Output.SetDiscreteValue(0, Quantity(temp_center, "C"))
