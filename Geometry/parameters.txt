@@ -1,21 +1,21 @@
 geometry: M1
 colling_type: INGA 3
 material: SYS
-l: 0.85 1.1 0.01
-b: 0.05 0.071 0.001
-t: 0.06 0.061 0.001
-OFHC_L_mid: 0.10 0.201 0.005
-OFHC_L_side: 0.10 0.201 0.005
-GAP_CU: 0.005 0.06 0.005
-dw_length: 0.03 0.04 0.01
-kong_height: 0.013 0.014 0.001
-kong_length: 0.025 0.026 0.001
-notch_depth: 0.000 0.0081 0.001
+l: 0.80 1.1 1.1
+b: 0.05 0.071 0.071
+t: 0.06 0.061 0.061
+OFHC_L_mid: 0.10 0.201 0.201
+OFHC_L_side: 0.10 0.201 0.201
+GAP_CU: 0.005 0.06 0.06
+dw_length: 0.03 0.04 0.04
+kong_height: 0.013 0.014 0.014
+kong_length: 0.025 0.026 0.026
+notch_depth: 0.000 0.0081 0.0081
 kaicao: yes
 cao_optics: 0.031
 cao_kuan: 0.007
 cao_height: 0.007
-l_optics: 0.85
+l_optics: 0.80
 b_optics: 0.046
 num_cores: 5
 heat_flux: EEHG
