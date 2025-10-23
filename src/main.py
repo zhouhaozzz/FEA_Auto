@@ -39,8 +39,6 @@ temp_num = (len(geometry_path)) * 1 * len(temp_vals) * len(conv_center_vals) * l
 
 if rank == 0: #拷贝已有负载
     mirror_name = [heat]
-    print(heat)
-
     #mirror_name = ["M1 EEHG"]
     #frequency = ["100k"]
     
@@ -54,8 +52,10 @@ comm.Barrier()
 geometry_path, heat_flux_path, material_path, thermal_script_path, geometry_script_path, stur_script_path = rw.get_all_path(cwd)
 if rank == 0:
     rw.save_heat_flux_path(heat_flux_path)
+    rw.init_out_files()
     print(heat_flux_path)
     # exit(0)
+comm.Barrier()
 
 for i, h in enumerate(heat_flux_path, start=0):
     print(h)
@@ -70,7 +70,7 @@ for i, h in enumerate(heat_flux_path, start=0):
     comm.Barrier() # 等待所有进程完成计算
 
     para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
-    print(para_list)
+    #print(para_list)
     
     if len(para_list) == temp_num:
         subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "0"])

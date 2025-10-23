@@ -429,7 +429,25 @@ def copy_result_to_target(mirror_name, frequency, flux):
     shutil.copy(os.path.join(cwd, "out", "deformation_trans.csv"), os.path.join(folder_path, os.path.basename('out/deformation_trans.csv')))
     shutil.copy(os.path.join(cwd, "out", "deformation_trans_Y.csv"), os.path.join(folder_path, os.path.basename('out/deformation_trans_Y.csv')))
     shutil.copy(os.path.join(cwd, "out", "GeometryParameters.txt"), os.path.join(folder_path, os.path.basename('out/GeometryParameters.txt')))
-    
+
+def init_out_files():
+    # 检查文件夹是否存在
+    folder_path = os.path.join(cwd, "out", "Ansys_out")
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path)
+    os.makedirs(folder_path)
+
+    folder_path = os.path.join(cwd, "out", "Ansys_out","Deformation")
+    os.makedirs(folder_path)
+    folder_path = os.path.join(cwd, "out", "Ansys_out","Thermal")
+    os.makedirs(folder_path)
+    folder_path = os.path.join(cwd, "out", "Deformation")
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path)
+    os.makedirs(folder_path)
+
+
+
 def delete_files_in_folder(folder_path):
     """ 删除文件夹中的所有文件，但不删除子文件夹 """
     # 遍历文件夹中的所有文件
