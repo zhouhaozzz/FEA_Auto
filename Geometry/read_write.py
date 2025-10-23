@@ -114,9 +114,9 @@ def read_ini_geom():
             if values[0] == 'notch_depth:':
                 read_ini_geom_value(notch_depth3, values)
             if values[0] == 'l_optics:':
-                kaicao = " ".join(values[1:])
+                l_optics = " ".join(values[1:])
             if values[0] == 'b_optics:':
-                kaicao = " ".join(values[1:])
+                b_optics = " ".join(values[1:])
             if values[0] == 'kaicao:':
                 kaicao = " ".join(values[1:])
             if values[0] == 'cao_optics:':
@@ -125,7 +125,7 @@ def read_ini_geom():
                 cao_kuan = " ".join(values[1:])
             if values[0] == 'cao_height:':
                 cao_height = " ".join(values[1:])
-    #print(colling_type, heat, frequency, l3, b3, t3, OFHC_L_mid3, OFHC_L_side3, GAP_CU3, dw_length3, kong_height3, kong_length3, notch_depth3, kaicao, cao_optics, cao_kuan, cao_height)
+    #print(colling_type, heat, frequency, l3, b3, t3, OFHC_L_mid3, OFHC_L_side3, GAP_CU3, dw_length3, kong_height3, kong_length3, notch_depth3, l_optics, b_optics, kaicao, cao_optics, cao_kuan, cao_height)
     return colling_type, heat, frequency, l3, b3, t3, OFHC_L_mid3, OFHC_L_side3, GAP_CU3, dw_length3, kong_height3, kong_length3, notch_depth3, l_optics, b_optics, kaicao, cao_optics, cao_kuan, cao_height
 
 def read_ini_conv():
