@@ -42,10 +42,10 @@ if rank == 0: #拷贝已有负载
     #mirror_name = ["M1 EEHG"]
     #frequency = ["100k"]
     
-    rw.delete_files_in_folder(os.path.join(cwd,"Files", "Heatload"))
-    for i in mirror_name:
-        for j in frequency:
-            rw.creat_heatload_file(cwd, i, j)
+    # rw.delete_files_in_folder(os.path.join(cwd,"Files", "Heatload"))
+    # for i in mirror_name:
+    #     for j in frequency:
+    #         rw.creat_heatload_file(cwd, i, j)
     
 # exit(0)
 comm.Barrier()

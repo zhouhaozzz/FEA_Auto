@@ -1,4 +1,4 @@
-l: 0.85 1.1 1.1
+l: 0.80 1.1 1.1
 b: 0.05 0.071 0.071
 t: 0.06 0.061 0.061
 OFHC_L_mid: 0.10 0.201 0.201
@@ -12,6 +12,8 @@ kaicao: yes
 cao_optics: 0.031
 cao_kuan: 0.007
 cao_height: 0.007
+l_optics: 0.75
+b_optics: 0.046
 geometry1: M1
 colling_type1: IN 1
 material1: SYS
