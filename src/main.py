@@ -52,7 +52,7 @@ comm.Barrier()
 geometry_path, heat_flux_path, material_path, thermal_script_path, geometry_script_path, stur_script_path = rw.get_all_path(cwd)
 if rank == 0:
     rw.save_heat_flux_path(heat_flux_path)
-    #rw.init_out_files()
+    rw.init_out_files()
     print(heat_flux_path)
     # exit(0)
 comm.Barrier()
@@ -65,35 +65,35 @@ for i, h in enumerate(heat_flux_path, start=0):
     mirror_name = result[2]
     frequency = result[3]
     
-    # if rank == 0:
-    #     rw.delete_gp_txt(os.path.join(cwd, "out"))
-    # comm.Barrier() # 等待所有进程完成计算
+    if rank == 0:
+        rw.delete_gp_txt(os.path.join(cwd, "out"))
+    comm.Barrier() # 等待所有进程完成计算
 
     para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
     #print(para_list)
     
-    # if len(para_list) == temp_num:
-    #     subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "0"])
-    # comm.Barrier() # 等待所有进程完成计算
-    # para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
-    # kkk=0
-    # jump=0
-    # for i in range(2): #多核
-    #     if len(para_list) > 0:
-    #         subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "1"])
-    #         comm.Barrier() # 等待所有进程完成计算
-    #         para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
-    # comm.Barrier() # 等待所有进程完成计算
-    # if rank == 0:
-    #     for i in range(1): #单核
-    #         if len(para_list) > 0 | len(para_list) < 5:
-    #             subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "2"])
-    #             para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
-    # comm.Barrier() # 等待所有进程完成计算
+    if len(para_list) == temp_num:
+        subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "0"])
+    comm.Barrier() # 等待所有进程完成计算
+    para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
+    kkk=0
+    jump=0
+    for i in range(2): #多核
+        if len(para_list) > 0:
+            subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "1"])
+            comm.Barrier() # 等待所有进程完成计算
+            para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
+    comm.Barrier() # 等待所有进程完成计算
+    if rank == 0:
+        for i in range(1): #单核
+            if len(para_list) > 0 | len(para_list) < 5:
+                subprocess.run(["python", thermal_script_path, str(i), str(rank), str(size), colling_type, "2"])
+                para_list = rw.check_temp_cal(cwd, temp_num, geometry_path, h, conv_center_vals, conv_side_vals, temp_vals)
+    comm.Barrier() # 等待所有进程完成计算
     
     
     
-    # if len(para_list) > 0: continue
+    if len(para_list) > 0: continue
 
 
     #Struct
@@ -105,8 +105,7 @@ for i, h in enumerate(heat_flux_path, start=0):
     temperature_path_reshape = np.reshape(temperature_path, (-1, gemo_single_num))
     para_list = rw.check_def_cal(cwd, temp_num, geometry_path, temperature_path_reshape)
     if len(para_list) == temp_num:
-        subprocess.run(["python", stur_script_path, str(rank), str(size), colling_type, "1"])  
-
+        subprocess.run(["python", stur_script_path, str(rank), str(size), colling_type, "1"])    
     comm.Barrier() # 等待所有进程完成计算
     para_list = rw.check_def_cal(cwd, temp_num, geometry_path, temperature_path_reshape)
     while len(para_list) > 0:
