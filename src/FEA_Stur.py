@@ -48,6 +48,7 @@ def Deformation_to_dat(filename, data):
 
 #cwd_out = os.path.join(cwd, "out", "Deformation")
 geometry_path, heat_flux_path, material_path, thermal_script_path, geometry_script_path, stur_script_path = rw.get_all_path(cwd)
+
 geometry_num = len(geometry_path)
 rank = int(sys.argv[1])
 size = int(sys.argv[2])
@@ -215,6 +216,7 @@ if (def_check):
             cu_mid.Material="OFHC"
 
             cu_mid.Suppressed = True
+            cu_neg.Suppressed = True
 
         CONN = Model.Connections
         for connection in CONN.Children:
@@ -372,6 +374,7 @@ else:
             cu_mid.Material="OFHC"
 
             cu_mid.Suppressed = True
+            cu_neg.Suppressed = True
             
         CONN = Model.Connections
         for connection in CONN.Children:

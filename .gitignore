@@ -2,4 +2,6 @@ Files/Heatload/
 Files/HeatFlux collect/
 Files/Model/
 out/
+src/mesh.png
+out/Init HeatFlux List.txt
 
